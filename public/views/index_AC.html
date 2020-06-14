@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>index_AC</title>
+
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-audio-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-call-function.js"></script>
+
+    <script src="jspsych-6.1.0/plugins/audio-button-response-simple.js"></script>
+    <script src="jspsych-6.1.0/plugins/audio-keyboard-response-simple.js"></script>
+    <script src="jspsych-6.1.0/utils.js"></script>
+    <script src="jspsych-6.1.0/plugins/audio-audio-down.js"></script>
+    <script src="jspsych-6.1.0/plugins/download-audio.js"></script>
+    <script src="jspsych-6.1.0/plugins/Recorderjs-master/dist/recorder.js"></script>
+
+    <script src="jspsych-6.1.0/AC_exp.js"></script>
+
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body></body>
+  <script>
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////// INITIALISE //////////////////////////////////////
+
+    /* start the experiment */
+    jsPsych.init({
+      timeline: timeline,
+      use_webaudio: false,
+      // on_interaction_data_update: function(data) {
+      //   var trial = jsPsych.currentTrial();
+      //   trial.data.event = data.event;
+      // },
+      on_finish: function() {
+        var csv = jsPsych.data.get().csv();
+        var filename = "ACexp_part" + jsPsych.data.get().values()[0].part_ID + "_" + DATE + ".csv";
+        // var filename = "ACexp_part" + jsPsych.data.get().values()[0].Part_ID + "_" + " + DATE + " + ".csv";
+        downloadCSV(csv,filename);
+        jsPsych.data.displayData();
+      }
+    })
+
+  </script>
+</html>
