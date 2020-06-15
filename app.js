@@ -48,7 +48,7 @@ app.post("/experiment-data", function(request,response) {
   ID_DATE = ID_DATE.replace(/"/g, "");
   // ID_DATE = ID_DATE.replace(searchValue: /"/g, replaceValue: "");
   filename = ID_DATE + ".csv";
-  saveDropbox(ID_DATE, filename);
+  saveDropbox(DATA_CSV, filename);
   response.end();
 })
 
