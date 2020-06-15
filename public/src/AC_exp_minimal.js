@@ -112,13 +112,8 @@ var DATE = YYYY + MM + DD;
 
     var calib_preAudio = {
       type: 'html-button-response',
-      stimulus: "<p>N0TE 1: Recent versions of Chrome require the user to " +
-      "interact with a page before it can play audio.</p>" +
-      "<p>Clicking the button below counts as an interaction.</p>" +
-      "<p>N0TE 2: the script is initialised with the `use_webaudio` parameter " +
-      "of jspsych.init set to `false` for testing on local machine; " +
-      "remember to change for testing on server</p>",
-      choices: ["play"]
+      stimulus: "<p>PART 1: CALIBRATION</p>",
+      choices: ["Play sound"]
     };
 
     var calib_audioOut = {
@@ -327,8 +322,22 @@ var DATE = YYYY + MM + DD;
 
     var randomizedTTblocks = jsPsych.randomization.shuffle([TTtest_procedure_blockA, TTtest_procedure_blockB, TTtest_procedure_blockC, TTtest_procedure_blockD]);
 
+    /* pages 2-4. Instructions */
+    var TTinstructions = {
+      data: {
+        screen_ID: "TTinstructions"
+      },
+      type: "TTinstructions",
+      pages: [
+        // page 2:
+        "<p>PART 2: TONGUE TWISTERS</p>" +
+        "<p>Insert instructions here.</p>"
+      ],
+      show_clickable_nav: true
+    }
+
       // TT_timeline = TT_timeline.timeline.concat(randomizedTTblocks);
-      TT_timeline.timeline = randomizedTTblocks;
+      TT_timeline.timeline = [TTinstructions, randomizedTTblocks];
 
 /////// PUSH CALIBRATION TRIALS TO CALIBRATION TIMELINE /////////
     // TT_timeline.timeline.push(TTtest_procedure_blockA);
@@ -343,6 +352,17 @@ var DATE = YYYY + MM + DD;
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// SiNRT ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+var instructions_SRT = {
+  data: {screen_id: "instructions_SRT"},
+  type: 'html-button-response',
+  stimulus: "<p>PART 3: SRT</p>" +
+  "<p>Insert instructions here.</p>",
+  choices: ['Continue'],
+  on_finish: function(data){
+          }
+};
+// timeline.push(pre_audio);
+
 var instructions_SiNRT = {
   data: {screen_id: "instructions_SiNRT"},
   type: 'html-button-response',
@@ -1282,46 +1302,45 @@ var procedure_minus30dB = {
 /////// PUSH NVSRT TRIALS TO SiNRT TIMELINE ///////////
     NVSRT_timeline.timeline.push(instructions_NVSRT);
     NVSRT_timeline.timeline.push(procedure_practiceNVSRT);
-    NVSRT_timeline.timeline.push(procedure_0dB);
+    NVSRT_timeline.timeline.push(procedure_120pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus2dB);
+    NVSRT_timeline.timeline.push(procedure_112_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus4dB);
+    NVSRT_timeline.timeline.push(procedure_105pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus6dB);
+    NVSRT_timeline.timeline.push(procedure_97_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus8dB);
+    NVSRT_timeline.timeline.push(procedure_90pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus10dB);
+    NVSRT_timeline.timeline.push(procedure_82_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus12dB);
+    NVSRT_timeline.timeline.push(procedure_75pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus14dB);
+    NVSRT_timeline.timeline.push(procedure_67_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus16dB);
+    NVSRT_timeline.timeline.push(procedure_60pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus18dB);
+    NVSRT_timeline.timeline.push(procedure_52_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus20dB);
+    NVSRT_timeline.timeline.push(procedure_45pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus22dB);
+    NVSRT_timeline.timeline.push(procedure_37_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus24dB);
+    NVSRT_timeline.timeline.push(procedure_30pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus26dB);
+    NVSRT_timeline.timeline.push(procedure_22_5pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus28dB);
+    NVSRT_timeline.timeline.push(procedure_15pt);
     NVSRT_timeline.timeline.push(after_block);
-    NVSRT_timeline.timeline.push(procedure_minus30dB);
+    NVSRT_timeline.timeline.push(procedure_7_5pt);
     // SiNRT_timeline.timeline.push(wrapUp_SiNRT);
     // timeline.push(NVSRT_timeline);
-
 
 //////////////////////// randomise order of SRTs ///////////////////////////////
     var randomizedSRTblocks = jsPsych.randomization.shuffle([SiNRT_timeline, NVSRT_timeline]);
 
       // TT_timeline = TT_timeline.timeline.concat(randomizedTTblocks);
-      SRT_timeline.timeline = randomizedSRTblocks;
+      SRT_timeline.timeline = [instructions_SRT, randomizedSRTblocks];
       timeline.push(SRT_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1330,6 +1349,14 @@ var procedure_minus30dB = {
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// FWDS ///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+    var instructions_DS = {
+      data: {screen_id: "instructions_DS"},
+      type: 'html-button-response',
+      stimulus: '<p>PART 4: DIGIT SPAN</p>' +
+      '<p>Insert instructions here.',
+      choices: ['Continue']
+    }
+
     var next_list = 0;
     var do_2nd_pres = 0;
 
@@ -1959,6 +1986,7 @@ var procedure_minus30dB = {
       }
 
       /////// PUSH FWDS TRIALS TO SiNRT TIMELINE ///////////
+          FWDS_timeline.timeline.push(instructions_DS);
           FWDS_timeline.timeline.push(FWDS_trial_1);
           FWDS_timeline.timeline.push(FWDS_trial_2);
           FWDS_timeline.timeline.push(FWDS_trial_3);
@@ -1975,7 +2003,7 @@ var procedure_minus30dB = {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////// FWDS ///////////////////////////////////////
+/////////////////////////////////// BWDS ///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
       next_list = 0;
       do_2nd_pres = 0;
@@ -2613,6 +2641,16 @@ var procedure_minus30dB = {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// Word Rec SiN ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+var instructions_wordRec = {
+  data: {screen_id: "instructions_SiNRT"},
+  type: 'html-button-response',
+  stimulus: "<p>PART 5: WORD RECOGNITION.</p>" +
+  "<p>Insert instructions here.</p>",
+  choices: ['Continue'],
+  on_finish: function(data){
+          }
+};
+
 var instructions_wordRec_SiN = {
   data: {screen_id: "instructions_SiNRT"},
   type: 'html-button-response',
@@ -2720,7 +2758,6 @@ var procedure_list1SiN = {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// Word Rec NVS ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
 var instructions_wordRec_NVS = {
   data: {screen_id: "instructions_NVSRT"},
   type: 'html-button-response',
@@ -2759,7 +2796,7 @@ var start_wordRecNVS = {
   on_finish: function(data){
           }
 };
-timeline.push(start_wordRecNVS);
+// timeline.push(start_wordRecNVS);
 
 var stimuli_list1NVS = [
   {stimulus_list1NVS: stimDir_NVSwords_list1 + "Bank.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Bank"}},
@@ -2828,7 +2865,7 @@ var procedure_list1NVS = {
 ////////////////////////// randomise SiN and NVS ///////////////////////////////
 var randomizedWordRecBlocks = jsPsych.randomization.shuffle([wordRecSiN_timeline, wordRecNVS_timeline]);
 
-  wordRec_timeline.timeline = randomizedWordRecBlocks;
+  wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
   timeline.push(wordRec_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
