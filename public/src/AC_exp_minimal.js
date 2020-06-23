@@ -2900,12 +2900,12 @@ function startExp() {
       .fail(function(){
         alert("Problem occurred while writing data to Dropbox. " +
               "Data will be saved to your computer. " +
-              "Please cpontact the experimenter!");
+              "Please contact the experimenter!");
         var csv = jsPsych.data.get().csv();
         var filename = "ACexp_part" + jsPsych.data.get().values()[0].part_ID + "_" + DATE + ".csv";
         // var filename = "ACexp_part" + jsPsych.data.get().values()[0].Part_ID + "_" + " + DATE + " + ".csv";
         downloadCSV(csv,filename);
-        window.location.href = "finish";
+        // window.location.href = "finish";
       })
 
       // jsPsych.data.displayData();
