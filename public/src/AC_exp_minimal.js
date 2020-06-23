@@ -324,15 +324,13 @@ var DATE = YYYY + MM + DD;
 
     /* pages 2-4. Instructions */
     var TTinstructions = {
+      type: 'html-button-response',
       data: {
         screen_ID: "TTinstructions"
       },
-      type: "TTinstructions",
-      pages: [
-        // page 2:
-        "<p>PART 2: TONGUE TWISTERS</p>" +
-        "<p>Insert instructions here.</p>"
-      ],
+      stimulus: "<p>PART 2: TONGUE TWISTERS</p>" +
+      "<p>Insert instructions here.</p>",
+      choices: ['Continue'],
       show_clickable_nav: true
     }
 
