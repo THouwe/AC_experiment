@@ -1,6 +1,7 @@
 // LOAD MODULES
 var express = require("express"),
     myModules = require("./scripts/myModules.js"),
+    multer = require("multer"),
     body_parser = require("body-parser");
     // require("dotenv").config(),
 
@@ -9,6 +10,7 @@ var json2csv = myModules.json2csv;
 
 // INSTANTIATE THE APP
 var app = express();
+const upload = multer();
 
 // STATIC MIDDLEWARE
 app.use(express.static(__dirname + '/public'));
@@ -30,11 +32,15 @@ app.set("view engine", "html");
 
 // ROUTING
 app.get("/", function (request, response) {
-  response.render("index_AC_minimal.html")
+  // var respID = response.query.r;
+  response.render("index_AC_DEMO.html")
 });
 app.get("/finish", function (request, response) {
   response.render("finish.html")
 });
+// app.get("/", function (request, response) {
+//   response.send("saveData_DEMO.html" + request.query.r + " + " + request.query.c)
+// });
 
 app.post("/experiment-data", function(request,response) {
   // retrieve the data and convert json to csv
@@ -59,12 +65,35 @@ app.post("/experiment-data", function(request,response) {
   var DATE = YYYY + MM + DD + "_" + HH + MN + SEC;
 
   ID_DATE = DATE;
-  console.log("ID_DATE = " + ID_DATE);
-  
-  filename = ID_DATE + ".csv";
-  saveDropbox(DATA_CSV, filename);
+  // console.log("ID_DATE = " + ID_DATE);
+
+  // filename = respID + "_" + ID_DATE + ".csv";
+  filename_CSV = ID_DATE + ".csv";
+  saveDropbox(DATA_CSV, filename_CSV);
+  // console.log(DATA_CSV);
   response.end();
 })
+
+app.post('/recordings', upload.any(), (req, res) => {
+    //console.log('Files: ', req.files);
+    // var filename = req.files[0].originalname;
+    var TODAY = new Date();
+    var SEC = String(TODAY.getSeconds()).padStart(2, '0');
+    var MN = String(TODAY.getMinutes()).padStart(2, '0');
+    var HH = String(TODAY.getHours()).padStart(2, '0');
+    var DD = String(TODAY.getDate()).padStart(2, '0');
+    var MM = String(TODAY.getMonth() + 1).padStart(2, '0');
+    var YYYY = String(TODAY.getFullYear());
+    var DATE = YYYY + MM + DD + "_" + HH + MN + SEC;
+
+    ID_DATE = DATE;
+
+    // var filename = new Date().toISOString();
+    var filename_WAV = ID_DATE + '.wav';
+    console.log('Recording arrivato: ' + filename_WAV);
+    var recording = req.files[0].buffer;
+    saveDropbox(recording, filename_WAV)
+});
 
 // START THE SERVER
 // var server = app.listen(3000, function(){
