@@ -33,7 +33,7 @@ app.set("view engine", "html");
 // ROUTING
 app.get("/", function (request, response) {
   // var respID = response.query.r;
-  response.render("index_AC_DEMO.html")
+  response.render("index_AC.html")
 });
 app.get("/finish", function (request, response) {
   response.render("finish.html")
@@ -98,6 +98,6 @@ app.post('/recordings', upload.any(), (req, res) => {
 // START THE SERVER
 // var server = app.listen(3000, function(){
 var server = app.listen(process.env.PORT, function(){
-    console.log("listening to posrt %d", server.address().port);
+    console.log("listening to port %d", server.address().port);
     // console.log(process.env)
 });

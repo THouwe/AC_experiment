@@ -399,30 +399,33 @@ jsPsych.plugins["upload-audio"] = (function() {
 
       function sendTheWav(blob) {
         var fd = new FormData();
+
         var recording = new Blob([blob], { type: "audio/wav" });
         fd.append("recording", recording);
 
-        $.ajax({
+        var part_ID = jsPsych.data.get().values()[0].part_ID;
+        var participant = new Blob([part_ID], {type: "text/plain"})
+        fd.append("participant", participant);
+
+        var postreq = $.ajax({
             url: '/recordings',
             type: 'POST',
             data: fd,
             processData: false,
             enctype: 'multipart/form-data',
             contentType: false,
-            // I always get 'Error occurred - undefined' (after delay)
-            // success: function(data) {
-            //  console.log('Result: Upload successful');
-            // },
-            // error: function(e) {
-            //    console.log('Result: Error occurred')
-            //     if (e) {
-            //       console.log(e.message);
-            //     }
-            // }
+            timeout: 500,
         });
-
-        jsPsych.finishTrial();
-      }
+        postreq.done(function(data) {
+          console.log( "Wav file sent" );
+        });
+        postreq.fail(function(e) {
+          console.log( "error: " + e.statusText);
+        });
+        postreq.always(function() {
+          jsPsych.finishTrial();
+        });
+      };
 
 
       function createDownloadLink(blob) {
