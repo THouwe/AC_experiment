@@ -1,5 +1,8 @@
 .env
 node_modules
+<<<<<<< HEAD
 package-BAK.json
 package-lockBAK.json
 BACKUP
+=======
+>>>>>>> parent of 2a7abc7... solved GitHub dependabot alert
